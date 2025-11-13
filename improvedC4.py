@@ -257,18 +257,18 @@ def win_rate_test(num_games= 100):
     avg_moves = np.mean(win_moves_taken_list) if win_moves_taken_list else 0
     return wins / num_games, avg_moves
 
-def train_dqn(episodes= 14000) :
+def train_dqn(episodes= 24000) :
     performance_history = []  # Each element: [episode, win_rate, avg_moves] will be later used to plot a graph
 
-    if os.path.exists('AgentDictTesting.pth') and os.path.exists('AgentTargetTesting.pth'): 
+    if os.path.exists('AgentDict.pth') and os.path.exists('AgentTarget.pth'): 
         #checks if file path exists and loads both the target and predicted dictionaries for the model
-        agent.q_network.load_state_dict(torch.load('AgentDictTesting.pth'))
-        agent.target_network.load_state_dict(torch.load('AgentTargetTesting.pth'))
+        agent.q_network.load_state_dict(torch.load('AgentDict.pth'))
+        agent.target_network.load_state_dict(torch.load('AgentTarget.pth'))
         print("Sucessfully loaded agent model")
 
-    if os.path.exists('AgentMemoryTesting.pth'): #checks if the memory (queue) file exists and loads it
+    if os.path.exists('AgentMemory.pth'): #checks if the memory (queue) file exists and loads it
         torch.serialization.add_safe_globals([deque])
-        agent.memory = torch.load('AgentMemoryTesting.pth', weights_only=False)
+        agent.memory = torch.load('AgentMemory.pth', weights_only=False)
         print("sucessfully loaded memory")
 
     start_time = time.time()
@@ -328,9 +328,9 @@ def train_dqn(episodes= 14000) :
         if episode % 10 == 0:
             agent.update_target_network() #Target is only updated for every 10 episodes to ensure the model is stable and not overfitting to the training data
     #Objective 1: Saving the predefined model and memory queue to a file so we can load it later for the GUI file
-    torch.save(agent.q_network.state_dict(), 'AgentDictTesting.pth') #Saves the model dictionary
-    torch.save(agent.target_network.state_dict(), 'AgentTargetTesting.pth') #Saves the target model dictionary
-    torch.save(agent.memory,'AgentMemoryTesting.pth') #Saves the memory of the agent
+    torch.save(agent.q_network.state_dict(), 'AgentDict.pth') #Saves the model dictionary
+    torch.save(agent.target_network.state_dict(), 'AgentTarget.pth') #Saves the target model dictionary
+    torch.save(agent.memory,'AgentMemory.pth') #Saves the memory of the agent
     print("Saved model and memory (training)")
 
 
@@ -413,7 +413,7 @@ def play_human():
 if __name__ == "__main__":
     mode = input("Enter 'train' to train the agent or 'play' to play against the agent: ").lower()
     if mode == "train":
-        train_dqn(episodes=14000)
+        train_dqn(episodes=24000)
         play_human()
     elif mode == "play":
         play_human()
