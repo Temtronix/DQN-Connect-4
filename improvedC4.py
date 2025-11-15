@@ -110,7 +110,7 @@ class DQNAgent:
         self.target_network.load_state_dict(self.q_network.state_dict())
         self.target_network.eval()
 
-        self.memory: deque = deque(maxlen=25000) #Queue that stores the last 250000 experiences of the model
+        self.memory: deque = deque(maxlen=20000) #Queue that stores the last 250000 experiences of the model
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=learning_rate)
         self.lossfunction = nn.MSELoss() #Mean square error loss function which is used to calculate the difference between the predicted and target Q-values
         self.gamma = gamma #Discount factor which determines importance of immediate rewards over future rewards
@@ -257,7 +257,7 @@ def win_rate_test(num_games= 100):
     avg_moves = np.mean(win_moves_taken_list) if win_moves_taken_list else 0
     return wins / num_games, avg_moves
 
-def train_dqn(episodes= 24000) :
+def train_dqn(episodes= 9000) :
     performance_history = []  # Each element: [episode, win_rate, avg_moves] will be later used to plot a graph
 
     if os.path.exists('AgentDict.pth') and os.path.exists('AgentTarget.pth'): 
@@ -413,7 +413,7 @@ def play_human():
 if __name__ == "__main__":
     mode = input("Enter 'train' to train the agent or 'play' to play against the agent: ").lower()
     if mode == "train":
-        train_dqn(episodes=24000)
+        train_dqn(episodes=9000)
         play_human()
     elif mode == "play":
         play_human()

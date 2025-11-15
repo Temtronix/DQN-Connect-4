@@ -8,17 +8,17 @@ class Connect4GUI:
     agent_wins = 0
     #Objective 1A, the trained file from the improvedC4 code is used as the original state dict for the agent
     #However if the new file exists, we load that file instead of our original but wont modify the original
-    if os.path.exists('AgentDict.pth'):
+    if os.path.exists('AgentDictNewFile.pth'):
         agent.q_network.load_state_dict(torch.load('AgentDictNewFile.pth'))
         agent.target_network.load_state_dict(torch.load('AgentTargetNewFile.pth'))
         torch.serialization.add_safe_globals([deque])
         agent.memory = torch.load('AgentMemoryNewFile.pth', weights_only=False)
         print("New File exists, loading new file")
     else:
-        agent.q_network.load_state_dict(torch.load('AgentDictTesting.pth'))
-        agent.target_network.load_state_dict(torch.load('AgentTargetTesting.pth'))
+        agent.q_network.load_state_dict(torch.load('AgentDict.pth'))
+        agent.target_network.load_state_dict(torch.load('AgentTarget.pth'))
         torch.serialization.add_safe_globals([deque])
-        agent.memory = torch.load('AgentMemoryTesting.pth', weights_only=False)
+        agent.memory = torch.load('AgentMemory.pth', weights_only=False)
         print("New File doesn't exist, loading old file")
 
     #Initializng all our variables, most importantly multiplayer_mode and player_role
@@ -114,7 +114,8 @@ class Connect4GUI:
         state = self.game.get_state()
         if col in self.game.legal_actions():
             row = self.game.drop_piece(col)
-            self.last_move = (row, self.agent_action) 
+            if not self.multiplayer_mode:
+                self.last_move = (row, self.agent_action) 
             self.draw_board()
             next_state = self.game.get_state()
             done = (not self.game.legal_actions()) or self.game.is_winning_move(2) or self.game.is_winning_move(1) 
@@ -183,9 +184,9 @@ def reset_agent():
         os.remove('AgentDictNewFile.pth')
         os.remove('AgentTargetNewFile.pth')
         os.remove('AgentMemoryNewFile.pth')
-        print("AgentDictNewFile.pth, AgentMemoryNewFile.pth and AgentTargetNewFileremoved")
+        print("AgentDictNewFile.pth, AgentMemoryNewFile.pth and AgentTargetNewFile.pth removed")
     else:
-        print("AgentDictNew.pth not found")
+        print("AgentDictNewFile.pth not found")
 
 #Objective 2AI, allows users to pick between player 1 or player 2 against the agent
 #Objective 6AI
