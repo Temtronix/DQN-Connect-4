@@ -34,10 +34,24 @@ This project was created as part of my AQA A-level Computer Science NEA with the
 * Moving averages plotted using Matplotlib
 
 ### Results
-* The DQN shows strong improvement over time
-* Agent can set up and execute dual threats
+* I plotted a graph for the agent against a random bot and a simple connect 4 heuristic algorithm that blocked winning moves
+* Against the heuristic algorithm
 
+<img width="936" height="398" alt="image" src="https://github.com/user-attachments/assets/fbd5f63e-3bef-4da7-8354-8aed37a1dbe6" />
+
+* Against the random bot
+
+<img width="940" height="445" alt="image" src="https://github.com/user-attachments/assets/760a011f-55a9-4887-8a8f-df07f58a3c1f" />
 
 ## GPU acceleration for Network (using CUDA)
 * Used Pytorch to uttilize my NVIDIA GPU for processing rather than my CPU
 * x6 faster using CUDA than without
+
+<img width="272" height="33" alt="image" src="https://github.com/user-attachments/assets/b75e45bb-76e9-4dce-97e2-563ac4792d50" />
+
+### Using GPU
+<img width="1028" height="153" alt="image" src="https://github.com/user-attachments/assets/eeb6e22d-5d40-4022-9f72-8e476f1ffdbf" />
+
+### Using CPU
+<img width="1014" height="69" alt="image" src="https://github.com/user-attachments/assets/23517c29-7696-4250-aeac-e88501b489ff" />
+
